@@ -1,113 +1,127 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { GmailIcon, InstagramIcon, FillLogo } from "./components/Icons";
+import { Main, About, Pricing, Contact, Header } from "./sections";
+import { AppContextType } from "./resources/types";
+import { useState } from "react";
+import Hamburger from "hamburger-react";
+import { MobileHeaderBar, AnimatedLines } from "./components";
 
 export default function Home() {
+  const [appState, setAppState] = useState<AppContextType>({
+    language: "Eng",
+    mode: true, //TRUE === DARK, FALSE === LIGHT
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [animationFinished, setAnimationFinished] =
+    useState<string>("max-[1111px]:h-0");
+
+  const appContainerClass = `overflow-x-hidden w-full h-screen overflow-auto flex justify-center bg-gradient-radial  ${
+    appState.mode
+      ? `from-[#0a0a0a] to-[#000] text-[#fff] selection:bg-[#272727]`
+      : `from-[#d3d3d3] text-[#000] to-[#fff] selection:bg-[#adadad]`
+  } `;
+
+  const toggleTheme = () => {
+    setAppState({
+      ...appState,
+      mode: !appState.mode,
+    });
+  };
+
+  const toggleLanguage = () => {
+    setAppState({
+      ...appState,
+      language: appState.language === "Eng" ? "Esp" : "Eng",
+    });
+  };
+
+  // To handle the menu opening and closing animation.
+  const toggleMenu = () => {
+    if (animationFinished !== "") {
+      setIsOpen(!isOpen);
+      setAnimationFinished("");
+      setTimeout(() => {
+        if (animationFinished === "max-[1111px]:h-screen") {
+          setAnimationFinished("max-[1111px]:h-0");
+        } else {
+          setAnimationFinished("max-[1111px]:h-screen");
+        }
+      }, 270);
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div id="appContainer" className={appContainerClass}>
+      <div
+        className="charge w-[90%] max-w-[1000px] flex flex-col items-center"
+        id="main"
+      >
+        <AnimatedLines appState={appState} />
+
+        <MobileHeaderBar appState={appState} />
+
+        <button
+          onClick={toggleMenu}
+          className="fixed top-2 m-auto min-[1112px]:hidden z-40"
+        >
+          <Hamburger toggled={isOpen} size={25} />
+        </button>
+        <div className="logo fixed left-[4vw] top-4 z-40">
+          <Link
+            href={"#main"}
+            style={{ transition: "all 0.2s ease-in-out" }}
+            className="rounded-full w-[45px] relative  bottom-[6px] h-[45px] flex justify-center items-center hover:rotate-[360deg]"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+            <FillLogo
+              width={30}
+              height={30}
+              color={appState.mode ? `#fff` : `#000`}
             />
-          </a>
+          </Link>
         </div>
-      </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <Header
+          toggleLanguage={toggleLanguage}
+          appState={appState}
+          menuOpen={isOpen}
+          animationFinished={animationFinished}
+          toggleTheme={toggleTheme}
         />
+        <main className="mt-[80px]">
+          <Main appState={appState} />
+          <About appState={appState} />
+          <Pricing appState={appState} />
+          <Contact appState={appState} />
+
+          <footer className="w-full flex py-2 mb-2 gap-2">
+            <p className="grow text-xs flex items-end opacity-70 max-[600px]:text-[10px]">
+              {appState.language === "Eng"
+                ? "Primptio™ 2024. Todos los derechos reservados"
+                : "Primptio™ 2024. All rights reserved"}
+            </p>
+            {/*<div className="flex justify-center items-center gap-3 ">
+              <Link href={`/`}>
+                <InstagramIcon
+                  width={30}
+                  height={30}
+                  color={appState.mode ? `#fff` : `#000`}
+                />
+              </Link>
+              <Link href={`/`}>
+                <GmailIcon
+                  width={30}
+                  height={30}
+                  color={appState.mode ? `#fff` : `#000`}
+                />
+              </Link>
+            </div>*/}
+          </footer>
+        </main>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }

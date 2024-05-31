@@ -2,32 +2,175 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*::-webkit-scrollbar {
+  width: 5px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+*::-webkit-scrollbar-thumb {
+  background: #464646;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.logo {
+  display: none;
+}
+
+button {
+  user-select: none;
+}
+
+.menuItemDark:hover {
+  opacity: 0.6;
+  transition: all 0.15s ease-in-out;
+}
+.menuItemLight:hover {
+  opacity: 0.6;
+  transition: all 0.15s ease-in-out;
+}
+
+@media (max-width: 1111px) {
+  .logo {
+    display: flex;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+  h1 {
+    font-size: 18px;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes openMenu {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100vh;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.infiniteMove {
+  animation: infiniteMove 7s ease-in-out infinite;
+}
+
+.infiniteMove2 {
+  animation: infiniteMove2 7s ease-in-out infinite;
+}
+
+.infiniteMove3 {
+  animation: infiniteMove3 7s ease-in-out infinite;
+}
+
+.infiniteMove4 {
+  animation: infiniteMove4 7s ease-in-out infinite;
+}
+
+@keyframes infiniteMove {
+  0% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes infiniteMove2 {
+  0% {
+    transform: translateY(-100vh);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100vh);
+  }
+}
+
+@keyframes infiniteMove3 {
+  0% {
+    transform: translateY(-100vh);
+  }
+  70% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100vh);
+  }
+}
+
+.fastCharge {
+  animation: fastCharge 0.3s ease-in-out;
+}
+* {
+  z-index: 3;
+}
+@keyframes fastCharge {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+* {
+  scroll-behavior: smooth;
+}
+@keyframes infiniteMove4 {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.openMenu {
+  animation: openMenu 0.3s ease-in-out;
+}
+
+@keyframes closeMenu {
+  0% {
+    height: 100vh;
+  }
+  100% {
+    height: 0;
+  }
+}
+
+.closeMenu {
+  animation: closeMenu 0.3s ease-in-out;
+}
+
+.charge {
+  animation: 1s charge;
+}
+
+.divisorDark {
+  background: linear-gradient(to right, #00000048, #ffffffa1, #00000049);
+}
+
+.divisorLight {
+  background: linear-gradient(to right, #ffffff00, #00000073, #ffffff00);
+}
+
+@keyframes charge {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
