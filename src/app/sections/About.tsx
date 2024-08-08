@@ -35,9 +35,9 @@ function About({ appState }: { appState: AppContextType }) {
               apasiona crear soluciones web que transforman la forma en que las
               empresas interactúan con sus clientes. Con un enfoque en la
               excelencia y la personalización, utilizamos las{" "}
-              <strong className={strongClass}>últimas tecnologías</strong>{" "}
-              aplicaciones que no solo impresionan visualmente, sino que también
-              ofrecen una funcionalidad superior.
+              <strong className={strongClass}>últimas tecnologías</strong> para
+              crear aplicaciones que no solo impresionan visualmente, sino que
+              también ofrecen una funcionalidad superior.
             </p>
             <p className={pClass}>
               Nos especializamos en entender las necesidades específicas de cada
@@ -49,7 +49,7 @@ function About({ appState }: { appState: AppContextType }) {
             <p className={pClass}>
               Nuestra metodología se basa en la colaboración cercana con
               nuestros clientes, asegurando que cada proyecto refleje fielmente
-              su visión y objetivos. Al combinar diseños estéticos y modernos
+              su visión y objetivos. Al combinar diseños estéticos y modernos con 
               funcionalidades útiles y de alto rendimiento, proporcionamos{" "}
               <strong className={strongClass}>
                 productos que no solo cumplen, sino que superan las expectativas

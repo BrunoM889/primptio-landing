@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { GmailIcon, InstagramIcon, FillLogo } from "./components/Icons";
+import {  FillLogo } from "./components/Icons";
 import { Main, About, Pricing, Contact, Header } from "./sections";
 import { AppContextType } from "./resources/types";
 import { useState } from "react";
@@ -21,7 +21,7 @@ export default function Home() {
 
   const appContainerClass = `overflow-x-hidden w-full h-screen overflow-auto flex justify-center bg-gradient-radial  ${
     appState.mode
-      ? `from-[#0a0a0a] to-[#000] text-[#fff] selection:bg-[#272727]`
+      ? `bg-[#000] text-[#fff] selection:bg-[#272727]`
       : `from-[#d3d3d3] text-[#000] to-[#fff] selection:bg-[#adadad]`
   } `;
 

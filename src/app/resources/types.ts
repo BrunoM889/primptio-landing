@@ -12,11 +12,8 @@ export type ButtonProps = {
 
 export type ServiceType = {
   id: number;
-  listOfPros: string[];
   title: string;
   description: string;
-  price: number;
-  completeDescription: string[];
 };
 
 export type MessageType = {
